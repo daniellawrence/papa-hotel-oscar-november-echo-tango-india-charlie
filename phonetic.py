@@ -10,43 +10,67 @@ def translate(translate_map):
         w = []
         for char in word:
             new_char = translate_map.get(char, char)
-            if new_char is None:
-                new_char = char
             w.append("{1}".format(char, new_char))
         new_words.append("({0}) {1}".format(word, " ".join(w)))
     return "\n".join(new_words)
 
 
-def go_evil():
-    nato = {
-        'a': None,
-        'b': None,
-        'c': None,
-        'd': None,
-        'e': None,
-        'f': None,
-        'g': 'gnome',
-        'h': None,
-        'i': None,
-        'j': None,
-        'k': 'known',
-        'l': None,
-        'm': None,
-        'n': None,
-        'o': None,
-        'p': None,
-        'q': None,
-        'r': None,
-        's': 'sea',
-        't': None,
-        'y': None,
-        'v': None,
-        'w': None,
-        'x': None,
-        'y': None,
-        'z': None,
+def go_unix():
+    unix = {
+       'a': 'awk',
+       'b': 'biff',
+       'c': 'cc',
+       'd': 'dd',
+       'e': 'emacs',
+       'f': 'fsck',
+       'g': 'grep',
+       'h': 'halt',
+       'i': 'indent',
+       'j': 'join',
+       'k': 'kill',
+       'l': 'lex',
+       'm': 'more',
+       'n': 'nice',
+       'o': 'od',
+       'p': 'passwd',
+       'q': 'quota',
+       'r': 'ranlib',
+       's': 'spell',
+       't': 'true',
+       'u': 'uniq',
+       'v': 'vi',
+       'w': 'whoami',
+       'x': 'x11',
+       'y': 'yes',
+       'z': 'zcat'
     }
-    return translate(nato)
+    return unix
+
+
+def go_evil():
+    evil = {
+        'b': 'bdellium',
+        'c': 'czar',
+        'h': 'heir',
+        'a': 'alsle',
+        'g': 'gnat',
+        'k': 'known',
+        'p': 'phlegm',
+        's': 'sea',
+        'r': 'right',
+        'w': 'write',
+        'o': 'ouija',
+        'x': 'xian',
+        'y': 'yiperite',
+        'm': 'mnemonic',
+        'e': 'euphrates',
+        'd': 'django',
+        't': 'tsunami',
+        'q': 'qat',
+    }
+    nato = go_nato()
+    nato.update(evil)
+    return nato
 
 
 def go_nato_phonetic():
@@ -89,7 +113,7 @@ def go_nato_phonetic():
         '0': 'zee-ro',
         '.': 'STOP',
     }
-    return translate(nato)
+    return nato
 
 
 def go_nato():
@@ -121,26 +145,34 @@ def go_nato():
         'z': 'zulu',
         '.': 'STOP',
     }
-    return translate(nato)
+    return nato
 
 
 def main():
     parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('--dialect', choices=['nato', 'nato-phonetic', 'evil'],
+    parser.add_argument('--dialect', choices=['nato', 'nato-phonetic', 'evil', 'unix'],
                         default='nato',
                         help='phonetci alphabet to use')
     args = parser.parse_args()
 
     if args.dialect == 'nato':
-        print go_nato()
+        m = go_nato()
+        print translate(m)
         return
 
     if args.dialect == 'nato-phonetic':
-        print go_nato_phonetic()
+        m = go_nato_phonetic()
+        print translate(m)
         return
 
     if args.dialect == 'evil':
-        print go_evil()
+        m = go_evil()
+        print translate(m)
+        return
+
+    if args.dialect == 'unix':
+        m = go_unix()
+        print translate(m)
         return
 
 if __name__ == '__main__':
